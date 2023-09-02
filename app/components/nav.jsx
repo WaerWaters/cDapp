@@ -91,40 +91,40 @@ export default function Nav({api, getConnectedWallet}) {
             )}
             <nav className="bg-gray-800 border-b-4 border-gray-600 mx-auto px-4 py-4">
                 <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                    <img
-                        src="favicon.ico" // Replace with your actual logo file path
-                        alt="Logo"
-                        className="h-8 w-8 mr-2"
-                    />
-                    <h1 className="text-2xl font-semibold text-white">Auxilium</h1>
+                    <a href="/" className="flex items-center">
+                        <img
+                            src="favicon.ico" // Replace with your actual logo file path
+                            alt="Logo"
+                            className="h-8 w-8 mr-2"
+                        />
+                        <h1 className="text-2xl font-semibold text-white">Auxilium</h1>
+                    </a>
+                    <div>
+                        <ul>
+                            <li></li>
+                        </ul>
                     </div>
                     <div>
-                    <ul>
-                        <li></li>
-                    </ul>
-                    </div>
-                    <div>
-                    <ul className="flex space-x-4">
-                        <li>
-                        <a className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" href="/new">Find or create new partition</a>
-                        </li>
-
-                        {showLoginLink ? (
+                        <ul className="flex space-x-4">
                             <li>
-                                <button className="text-white hover:text-gray-300" href="/login" onClick={togglePopup}>Connect Wallet</button>
+                            <a className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" href="/new">Find or create new partition</a>
                             </li>
-                        ) : (
-                            <li className="relative group">
-                                <span className="text-white hover:bg-blue-700 cursor-pointer block py-1 px-2">{connectedWallet["name"]} Connected</span> {/* Added hover:bg-blue-700 */}
-                                <div className="absolute hidden group-hover:block z-10 mt-0 right-0 w-48 bg-white text-black border border-gray-300 rounded">
-                                    <a href="/userpage" className="block px-4 py-2 hover:bg-gray-200">User Page</a>
-                                    <button onClick={disconnectWallet} className="block w-full text-left px-4 py-2 hover:bg-gray-200">Disconnect</button>
-                                </div>
-                            </li>
-                        )}
-                        
-                    </ul>
+
+                            {showLoginLink ? (
+                                <li>
+                                    <button className="text-white hover:text-gray-300" href="/login" onClick={togglePopup}>Connect Wallet</button>
+                                </li>
+                            ) : (
+                                <li className="relative group">
+                                    <span className="text-white hover:bg-blue-700 cursor-pointer block py-1 px-2">{connectedWallet["name"]} Connected</span> {/* Added hover:bg-blue-700 */}
+                                    <div className="absolute hidden group-hover:block z-10 mt-0 right-0 w-48 bg-white text-black border border-gray-300 rounded">
+                                        <a href="/userpage" className="block px-4 py-2 hover:bg-gray-200">User Page</a>
+                                        <button onClick={disconnectWallet} className="block w-full text-left px-4 py-2 hover:bg-gray-200">Disconnect</button>
+                                    </div>
+                                </li>
+                            )}
+                            
+                        </ul>
                     </div>
                 </div>
             </nav>
