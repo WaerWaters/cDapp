@@ -6,9 +6,29 @@ import Nav from "./components/nav"
 export default function ClientSide({allowedWallets}) {
     const [connectedWallet, getConnectedWallet] = useState(null)
     const [inputValue, setInputValue] = useState('')
+    const [showPopup, setShowPopup] = useState(false);
+    const [nftData, setNftData] = useState(null);
+
+    const handleOverlayClick = () => setShowPopup(false);
+
+    const handlePopupClick = (e) => e.stopPropagation();
 
     const api = window.cardano
     
+    // fetch api to fetch nft data
+    const fetchNFTData = async (project, asset) => {
+        fetch(`/api/fetchNFTData?project=${project}&asset=${asset}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Data:', data);
+            setNftData(data);
+            setShowPopup(true);
+        })
+        .catch(error => {
+            console.error('An error occurred:', error);
+        });
+    }
+
     // Function to handle URL submission
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,17 +61,6 @@ export default function ClientSide({allowedWallets}) {
         }
     };
 
-    const fetchNFTData = async (project, asset) => {
-        fetch(`/api/fetchNFTData?project=${project}&asset=${asset}`)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Data:', data);
-        })
-        .catch(error => {
-            console.error('An error occurred:', error);
-        });
-    }
-
     return (
         <>
             <Nav api={api} getConnectedWallet={getConnectedWallet} />
@@ -62,7 +71,7 @@ export default function ClientSide({allowedWallets}) {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         className="text-black w-1/2 p-4 text-lg bg-gray-300 rounded-2xl border-2 transition duration-200 ease-in-out focus:border-blue-600 focus:ring focus:ring-blue-200 focus:outline-none"
-                        placeholder="Enter something..."
+                        placeholder="Paste NFT Market URL. (ex https://www.jpg.store/asset/...)"
                     />
                     <button 
                         onClick={handleSubmit}
@@ -72,6 +81,32 @@ export default function ClientSide({allowedWallets}) {
                     </button>
                 </div>
             </form>
+            {showPopup && (
+                <div id="overlay" className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50" onClick={handleOverlayClick}>
+                    <div className="border-2 bg-gray-800 p-4 rounded shadow-lg" onClick={handlePopupClick}>
+                        <div className='border-2 w-auto text-center text-4xl font-medium'>
+                            Create Proposal
+                        </div>
+                        <div className="flex border-2 border-blue-300">
+                            <div className="border-2 border-yellow-300 text-center w-1/2 text-2xl">
+                                {nftData["name"]}
+                                <img src={`https://ipfs.io/ipfs/${nftData["url"]}`} alt="IPFS Image" className="w-auto h-auto object-cover"/>
+                            </div>
+                            <div className="border-2 border-red-300 w-1/2">
+                                <div className='text-center text-2xl' >
+                                    Set Rules and Conditions
+                                </div>
+                                <div>
+
+                                </div>
+                                <div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

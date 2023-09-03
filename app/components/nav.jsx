@@ -106,10 +106,6 @@ export default function Nav({api, getConnectedWallet}) {
                     </div>
                     <div>
                         <ul className="flex space-x-4">
-                            <li>
-                            <a className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" href="/new">Find or create new partition</a>
-                            </li>
-
                             {showLoginLink ? (
                                 <li>
                                     <button className="text-white hover:text-gray-300" href="/login" onClick={togglePopup}>Connect Wallet</button>
